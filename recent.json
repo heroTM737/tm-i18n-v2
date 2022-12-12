@@ -1,0 +1,10 @@
+[
+  {
+    "name": "local",
+    "src": "src/locales"
+  },
+  {
+    "name": "local2",
+    "src": "src/locales2"
+  }
+]

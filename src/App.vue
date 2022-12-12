@@ -10,7 +10,7 @@ import HelloWorld from './components/HelloWorld.vue'
     <img class="logo electron" src="./assets/electron.svg" >
     <img class="logo vue" src="./assets/vue.svg" >
   </div>
-  <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
+  <HelloWorld />
   <div class="static-public">
     Place static files into the <code>/public</code> folder
     <img style="width:77px;" :src="'./node.png'" >
