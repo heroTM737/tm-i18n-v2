@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import fs from 'fs'
 
-defineProps<{ msg: string }>()
+defineProps<{ }>()
 
 // data
 let recentList: any[]
@@ -22,18 +22,18 @@ const readDir = (index: number) => {
 </script>
 
 <template>
-  <h1>Recent</h1>
+    <h1>Recent</h1>
 
     <div v-for="(item, index) in recentList" :key="index" class="mb-3">
         <button @click="readDir(index)" class="mr-3">
-            {{item.name}}
+            {{ item.name }}
         </button>
-        <span style="color: #fff" >{{item.src}}</span>
+        <span style="color: #fff">{{ item.src }}</span>
     </div>
 </template>
 
-<style scoped>
-.read-the-docs {
-  color: #888;
+<style scoped lang="scss">
+div {
+    background: red;
 }
 </style>
