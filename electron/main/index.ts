@@ -115,8 +115,8 @@ ipcMain.handle('open-win', (event, arg) => {
     }
 })
 
-ipcMain.on('open-file', (event, data) => {
+ipcMain.on('open-file-directory', (event, data) => {
     dialog.showOpenDialog(null, data).then(filePaths => {
-        event.sender.send('open-file-done', filePaths);
+        event.sender.send('open-file-directory-done', filePaths);
     });
 });

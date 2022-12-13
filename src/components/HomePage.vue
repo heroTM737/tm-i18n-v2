@@ -19,21 +19,26 @@ const readDir = (index: number) => {
     console.log(index)
 }
 
-const pickDir = () => {
-    utils.selectFile().then((filePath: string) => {
-        let itemIndex = recentList.findIndex(item => item.src === filePath)
+const selectDir = () => {
+    utils.selectFileOrDirectory().then((filePath: string) => {
+        let i18nPath = utils.findI18nFolder(filePath)
+        if (!i18nPath) {
+            return
+        }
+        let itemIndex = recentList.findIndex(item => item.src === i18nPath)
         if (itemIndex >= 0) {
             recentList.splice(itemIndex, 1)
         }
         recentList.splice(0, 0, {
-            name: filePath,
-            src: filePath
+            name: utils.getItemNameFromPath(i18nPath),
+            src: i18nPath
         })
         saveRecent()
     });
 }
 
-const deleteRecentDir = (index: number) => {
+const deleteRecentDir = (event: any, index: number) => {
+    event.stopPropagation();
     recentList.splice(index, 1);
     saveRecent()
 }
@@ -41,14 +46,14 @@ const deleteRecentDir = (index: number) => {
 
 <template>
     <div class="page HomePage">
-        <v-btn size="small" @click="pickDir">Select</v-btn>
+        <v-btn size="small" @click="selectDir">Select</v-btn>
         <div v-for="(item, index) in recentList" :key="index" class="item" @click="readDir(index)">
             <div class="flex-grow-1">
                 <input class="item-name" v-model="item.name" @focusout="saveRecent">
                 <div class="item-src">{{ item.src }}</div>
             </div>
-            <div @click="deleteRecentDir(index)" class="d-flex align-center pa-2">
-                <v-icon icon="mdi-close-circle-outline"></v-icon>
+            <div @click="deleteRecentDir($event, index)" class="d-flex align-center pa-2">
+                <v-icon icon="mdi-close-circle-outline" class="icon-delete"></v-icon>
             </div>
         </div>
     </div>
@@ -89,6 +94,14 @@ const deleteRecentDir = (index: number) => {
 
         .item-src {
             padding-left: 5px;
+        }
+
+        .icon-delete {
+            transition: all 0.3s ease;
+
+            &:hover {
+                font-size: 2.5em;
+            }
         }
     }
 }

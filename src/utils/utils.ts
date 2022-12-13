@@ -15,10 +15,13 @@ export const DefaultPromiseCallback: PromiseCallbackInterface = {
 
 let openFilePromiseCallback: PromiseCallbackInterface<string> = DefaultPromiseCallback
 
+const pathSeparator = '\\'
+
 const utils = {
-    selectFile(): Promise<string> {
-        ipcRenderer.send('open-file', {
-            title: 'Select i18n folder'
+    selectFileOrDirectory(): Promise<string> {
+        ipcRenderer.send('open-file-directory', {
+            title: 'Select i18n folder',
+            properties: ['openFile', 'openDirectory']
         })
         return new Promise((resolve, reject) => {
             openFilePromiseCallback = { resolve, reject }
@@ -35,10 +38,40 @@ const utils = {
             return fs.writeFileSync(filePath, fileContent)
         }
         return null
+    },
+    findI18nFolder(path: string): string | null {
+        console.log(path)
+        let isDirectory = fs.lstatSync(path).isDirectory()
+        if (isDirectory) {
+            let dirName = utils.getItemNameFromPath(path)
+            let ignoreDir = ['node_modules']
+            if (dirName.startsWith('.') || ignoreDir.includes(dirName)) {
+                return null
+            }
+            let children = fs.readdirSync(path)
+            for (let child of children) {
+                let found = utils.findI18nFolder(path + pathSeparator + child)
+                if (found) {
+                    return found
+                }
+            }
+        } else {
+            if (
+                path.endsWith('json') &&
+                path.includes('i18n')
+            ) {
+                return path
+            }
+        }
+        return null
+    },
+    getItemNameFromPath(path: string) {
+        let split = path.split(pathSeparator)
+        return split[split.length - 1]
     }
 }
 
-ipcRenderer.on('open-file-done', (_event, data) => {
+ipcRenderer.on('open-file-directory-done', (_event, data) => {
     if (data.filePaths.length > 0) {
         openFilePromiseCallback.resolve(data.filePaths[0])
     } else {
