@@ -1,10 +1,13 @@
 <template>
     <div>
-        EditorPage
         <div>
-            {{ appStore.activeSource }}
+            <v-btn @click="backToHomePage">Back</v-btn> <b>{{ appStore.activeSource?.name }}</b> | {{ appStore.activeSource?.src }}
         </div>
-        <v-btn @click="backToHomePage">Back</v-btn>
+        <div>
+            <div v-for="(item, index) in appStore.activeData" :key="index">
+                {{ item.name }}
+            </div>
+        </div>
     </div>
 </template>
 

@@ -1,6 +1,7 @@
 import { ipcRenderer } from 'electron'
 import fs from 'fs'
 import { ToastMessageInterface } from '../models/models';
+import constants from './constants';
 
 export interface PromiseCallbackInterface<T = any, E = any> {
     resolve: (value: T) => void;
@@ -15,7 +16,7 @@ export const DefaultPromiseCallback: PromiseCallbackInterface = {
 };
 
 let openFilePromiseCallback: PromiseCallbackInterface<string> = DefaultPromiseCallback
-const pathSeparator = '\\'
+const pathSeparator = constants.PATH_SEPARATOR
 const ToastMessage: ToastMessageInterface | null = null
 
 const utils = {

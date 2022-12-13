@@ -21,9 +21,7 @@ const saveRecent = () => {
 }
 
 const readDir = (index: number) => {
-    appStore.$patch({
-        activeSource: recentList[index].src
-    })
+    appStore.setActiveSource(recentList[index])
     router.push('/edit')
 }
 
@@ -34,6 +32,8 @@ const selectDir = () => {
             utils.toast('Can not find i18n folder', constants.TOAST.ERROR)
             return
         }
+        let split = i18nPath.split(constants.PATH_SEPARATOR)
+        i18nPath = split.slice(0, split.length - 1).join(constants.PATH_SEPARATOR)
         let itemIndex = recentList.findIndex(item => item.src === i18nPath)
         if (itemIndex >= 0) {
             recentList.splice(itemIndex, 1)
@@ -43,12 +43,17 @@ const selectDir = () => {
             src: i18nPath
         })
         saveRecent()
+        readDir(0)
     });
 }
 
 const deleteRecentDir = (index: number) => {
     recentList.splice(index, 1);
     saveRecent()
+}
+
+const onEnter = (event: any) => {
+    console.log(event.target)
 }
 </script>
 
@@ -57,8 +62,14 @@ const deleteRecentDir = (index: number) => {
         <v-btn size="small" @click="selectDir">Select</v-btn>
         <div v-for="(item, index) in recentList" :key="index" class="item" @click="readDir(index)">
             <div class="flex-grow-1">
-                <input class="item-name" v-model="item.name" @focusout="saveRecent" @click.stop="">
-                <div class="item-src">{{ item.src }}</div>
+                <input
+                    class="item-name"
+                    v-model="item.name"
+                    @focusout="saveRecent"
+                    @keyup.enter="onEnter"
+                    @click.stop=""
+                >
+                <div class="item-src">{{ item.src.split(constants.PATH_SEPARATOR).join(' > ') }}</div>
             </div>
             <div @click.stop="deleteRecentDir(index)" class="icon-delete-wrapper">
                 <v-icon icon="mdi-close-circle-outline" class="icon-delete"></v-icon>

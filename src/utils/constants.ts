@@ -1,4 +1,5 @@
 const constants = {
+    PATH_SEPARATOR: '\\',
     TOAST: {
         ERROR: 'red',
         SUCCESS: 'orange',
