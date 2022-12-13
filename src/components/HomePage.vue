@@ -1,28 +1,35 @@
 <script setup lang="ts">
-import fs from 'fs'
+import { reactive } from 'vue'
+import utils from '../utils/utils';
+import { RecentItem } from '../models/RecentItem';
 
-defineProps<{ }>()
+defineProps<{}>()
 
 // data
-let recentList: any[]
 let fileName = 'recent.json'
-if (fs.existsSync(fileName)) {
-    recentList = JSON.parse(fs.readFileSync(fileName, 'utf8'))
-} else {
-    recentList = []
-}
+let fileContent = utils.readFile(fileName);
+let recentList = reactive<RecentItem[]>(fileContent ? JSON.parse(fileContent) : [])
 
-console.log(recentList);
-
-// method
+// methods
 const readDir = (index: number) => {
     console.log(index)
 }
 
+const pickDir = () => {
+    utils.selectFile().then((filePath: string) => {
+        recentList.push({
+            name: filePath,
+            src: filePath
+        })
+    });
+}
 </script>
 
 <template>
-    <h1>Recent</h1>
+    <div>
+        <h1>Recent</h1>
+        <button @click="pickDir">Select source</button>
+    </div>
 
     <div v-for="(item, index) in recentList" :key="index" class="mb-3">
         <button @click="readDir(index)" class="mr-3">

@@ -4,7 +4,7 @@ import './samples/node-api'
 import './assets/common.scss'
 
 createApp(App)
-  .mount('#app')
-  .$nextTick(() => {
-    postMessage({ payload: 'removeLoading' }, '*')
-  })
+    .mount('#app')
+    .$nextTick(() => {
+        postMessage({ payload: 'removeLoading' }, '*')
+    })
