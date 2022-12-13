@@ -51,10 +51,6 @@ const deleteRecentDir = (index: number) => {
     recentList.splice(index, 1);
     saveRecent()
 }
-
-const onEnter = (event: any) => {
-    console.log(event.target)
-}
 </script>
 
 <template>
@@ -66,7 +62,6 @@ const onEnter = (event: any) => {
                     class="item-name"
                     v-model="item.name"
                     @focusout="saveRecent"
-                    @keyup.enter="onEnter"
                     @click.stop=""
                 >
                 <div class="item-src">{{ item.src.split(constants.PATH_SEPARATOR).join(' > ') }}</div>

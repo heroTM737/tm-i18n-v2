@@ -37,10 +37,7 @@ const utils = {
         return null
     },
     saveFile(filePath: string, fileContent: string) {
-        if (fs.existsSync(filePath)) {
-            return fs.writeFileSync(filePath, fileContent)
-        }
-        return null
+        return fs.writeFileSync(filePath, fileContent)
     },
     findI18nFile(path: string): string | null {
         let isDirectory = fs.lstatSync(path).isDirectory()
