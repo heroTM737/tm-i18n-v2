@@ -24,9 +24,15 @@ const utils = {
             openFilePromiseCallback = { resolve, reject }
         })
     },
-    readFile (filePath: string) {
+    readFile(filePath: string) {
         if (fs.existsSync(filePath)) {
             return fs.readFileSync(filePath, 'utf8');
+        }
+        return null
+    },
+    saveFile(filePath: string, fileContent: string) {
+        if (fs.existsSync(filePath)) {
+            return fs.writeFileSync(filePath, fileContent)
         }
         return null
     }
