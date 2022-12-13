@@ -13,11 +13,14 @@
   "engines": {
     "node": "^14.18.0 || >=16.0.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "vuetify": "^3.0.4"
+  },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",
     "electron": "^22.0.0",
     "electron-builder": "^23.3.3",
+    "sass": "^1.56.2",
     "typescript": "^4.8.4",
     "vite": "^4.0.0",
     "vite-plugin-electron": "^0.10.4",

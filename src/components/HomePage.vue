@@ -41,14 +41,14 @@ const deleteRecentDir = (index: number) => {
 
 <template>
     <div class="page HomePage">
-        <button @click="pickDir">Select Source</button>
+        <v-btn size="small" @click="pickDir">Select</v-btn>
         <div v-for="(item, index) in recentList" :key="index" class="item" @click="readDir(index)">
-            <div>
+            <div class="flex-grow-1">
                 <input class="item-name" v-model="item.name" @focusout="saveRecent">
                 <div class="item-src">{{ item.src }}</div>
             </div>
-            <div @click="deleteRecentDir(index)">
-                X
+            <div @click="deleteRecentDir(index)" class="d-flex align-center pa-2">
+                <v-icon icon="mdi-close-circle-outline"></v-icon>
             </div>
         </div>
     </div>
@@ -58,15 +58,15 @@ const deleteRecentDir = (index: number) => {
 .HomePage {
     background: #354384;
     padding: 10px;
-    box-sizing: border-box;
 
     .item {
         background: #273772;
         color: #fff;
-        padding: 10px;
+        padding: 10px 5px;
         margin: 10px 0;
         border-radius: 5px;
         cursor: pointer;
+        display: flex;
 
         &:hover {
             background: #183bbf;
@@ -75,16 +75,20 @@ const deleteRecentDir = (index: number) => {
         .item-name {
             font-weight: bold;
             font-size: 1.5em;
-            margin-bottom: 5px;
             background: rgba(0, 0, 0, 0);
             border: 1px solid rgba(0, 0, 0, 0);
             border-radius: 5px;
             color: #fff;
             width: 100%;
+            padding-left: 5px;
 
             &:hover {
                 border-color: #fff;
             }
+        }
+
+        .item-src {
+            padding-left: 5px;
         }
     }
 }

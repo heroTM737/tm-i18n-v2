@@ -39,7 +39,11 @@ const utils = {
 }
 
 ipcRenderer.on('open-file-done', (_event, data) => {
-    openFilePromiseCallback.resolve(data.filePaths[0])
+    if (data.filePaths.length > 0) {
+        openFilePromiseCallback.resolve(data.filePaths[0])
+    } else {
+        openFilePromiseCallback.reject('cancelled')
+    }
 })
 
 export default utils;
