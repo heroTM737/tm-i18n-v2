@@ -1,5 +1,6 @@
 import { ipcRenderer } from 'electron'
 import fs from 'fs'
+import { ToastMessageInterface } from '../models/models';
 
 export interface PromiseCallbackInterface<T = any, E = any> {
     resolve: (value: T) => void;
@@ -14,10 +15,11 @@ export const DefaultPromiseCallback: PromiseCallbackInterface = {
 };
 
 let openFilePromiseCallback: PromiseCallbackInterface<string> = DefaultPromiseCallback
-
 const pathSeparator = '\\'
+const ToastMessage: ToastMessageInterface | null = null
 
 const utils = {
+    ToastMessage,
     selectFileOrDirectory(): Promise<string> {
         ipcRenderer.send('open-file-directory', {
             title: 'Select i18n folder',
@@ -40,7 +42,6 @@ const utils = {
         return null
     },
     findI18nFolder(path: string): string | null {
-        console.log(path)
         let isDirectory = fs.lstatSync(path).isDirectory()
         if (isDirectory) {
             let dirName = utils.getItemNameFromPath(path)
@@ -68,6 +69,9 @@ const utils = {
     getItemNameFromPath(path: string) {
         let split = path.split(pathSeparator)
         return split[split.length - 1]
+    },
+    toast(message: string, type: string) {
+        (utils.ToastMessage as any)?.open(message, type)
     }
 }
 

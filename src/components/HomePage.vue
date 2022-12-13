@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
 import utils from '../utils/utils';
-import { RecentItem } from '../models/RecentItem';
+import { RecentItemInterface } from '../models/models';
+import constants from '../utils/constants';
 
 defineProps<{}>()
 
 // data
 let fileName = 'recent.json'
 let fileContent = utils.readFile(fileName);
-let recentList = reactive<RecentItem[]>(fileContent ? JSON.parse(fileContent) : [])
+let recentList = reactive<RecentItemInterface[]>(fileContent ? JSON.parse(fileContent) : [])
 
 // methods
 const saveRecent = () => {
@@ -23,6 +24,7 @@ const selectDir = () => {
     utils.selectFileOrDirectory().then((filePath: string) => {
         let i18nPath = utils.findI18nFolder(filePath)
         if (!i18nPath) {
+            utils.toast('Can not find i18n folder', constants.TOAST.ERROR)
             return
         }
         let itemIndex = recentList.findIndex(item => item.src === i18nPath)
