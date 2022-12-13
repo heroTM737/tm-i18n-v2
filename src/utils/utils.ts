@@ -41,7 +41,7 @@ const utils = {
         }
         return null
     },
-    findI18nFolder(path: string): string | null {
+    findI18nFile(path: string): string | null {
         let isDirectory = fs.lstatSync(path).isDirectory()
         if (isDirectory) {
             let dirName = utils.getItemNameFromPath(path)
@@ -51,7 +51,7 @@ const utils = {
             }
             let children = fs.readdirSync(path)
             for (let child of children) {
-                let found = utils.findI18nFolder(path + pathSeparator + child)
+                let found = utils.findI18nFile(path + pathSeparator + child)
                 if (found) {
                     return found
                 }

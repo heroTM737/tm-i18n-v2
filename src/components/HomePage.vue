@@ -22,7 +22,7 @@ const readDir = (index: number) => {
 
 const selectDir = () => {
     utils.selectFileOrDirectory().then((filePath: string) => {
-        let i18nPath = utils.findI18nFolder(filePath)
+        let i18nPath = utils.findI18nFile(filePath)
         if (!i18nPath) {
             utils.toast('Can not find i18n folder', constants.TOAST.ERROR)
             return
