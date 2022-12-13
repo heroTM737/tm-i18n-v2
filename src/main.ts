@@ -3,12 +3,14 @@ import App from './App.vue'
 import './samples/node-api'
 import './assets/common.scss'
 
+// router
+import router from './routes/routes'
+
 // Vuetify
 import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
-
 const vuetify = createVuetify({
     components,
     directives,
@@ -22,6 +24,7 @@ const pinia = createPinia()
 createApp(App)
     .use(vuetify)
     .use(pinia)
+    .use(router)
     .mount('#app')
     .$nextTick(() => {
         postMessage({ payload: 'removeLoading' }, '*')

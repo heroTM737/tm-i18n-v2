@@ -4,6 +4,7 @@ import utils from '../utils/utils';
 import { RecentItemInterface } from '../models/models';
 import constants from '../utils/constants';
 import useAppStore from '../stores/app.store';
+import router from '../routes/routes';
 
 defineProps<{}>()
 
@@ -23,6 +24,7 @@ const readDir = (index: number) => {
     appStore.$patch({
         activeSource: recentList[index].src
     })
+    router.push('/edit')
 }
 
 const selectDir = () => {
@@ -53,7 +55,6 @@ const deleteRecentDir = (index: number) => {
 <template>
     <div class="page HomePage">
         <v-btn size="small" @click="selectDir">Select</v-btn>
-        {{ appStore.activeSource }}
         <div v-for="(item, index) in recentList" :key="index" class="item" @click="readDir(index)">
             <div class="flex-grow-1">
                 <input class="item-name" v-model="item.name" @focusout="saveRecent" @click.stop="">
