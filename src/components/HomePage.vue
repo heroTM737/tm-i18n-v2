@@ -3,8 +3,11 @@ import { reactive } from 'vue'
 import utils from '../utils/utils';
 import { RecentItemInterface } from '../models/models';
 import constants from '../utils/constants';
+import useAppStore from '../stores/app.store';
 
 defineProps<{}>()
+
+const appStore = useAppStore()
 
 // data
 let fileName = 'recent.json'
@@ -17,7 +20,9 @@ const saveRecent = () => {
 }
 
 const readDir = (index: number) => {
-    console.log(index)
+    appStore.$patch({
+        activeSource: recentList[index].src
+    })
 }
 
 const selectDir = () => {
@@ -39,8 +44,7 @@ const selectDir = () => {
     });
 }
 
-const deleteRecentDir = (event: any, index: number) => {
-    event.stopPropagation();
+const deleteRecentDir = (index: number) => {
     recentList.splice(index, 1);
     saveRecent()
 }
@@ -49,12 +53,13 @@ const deleteRecentDir = (event: any, index: number) => {
 <template>
     <div class="page HomePage">
         <v-btn size="small" @click="selectDir">Select</v-btn>
+        {{ appStore.activeSource }}
         <div v-for="(item, index) in recentList" :key="index" class="item" @click="readDir(index)">
             <div class="flex-grow-1">
-                <input class="item-name" v-model="item.name" @focusout="saveRecent">
+                <input class="item-name" v-model="item.name" @focusout="saveRecent" @click.stop="">
                 <div class="item-src">{{ item.src }}</div>
             </div>
-            <div @click="deleteRecentDir($event, index)" class="d-flex align-center pa-2">
+            <div @click.stop="deleteRecentDir(index)" class="icon-delete-wrapper">
                 <v-icon icon="mdi-close-circle-outline" class="icon-delete"></v-icon>
             </div>
         </div>
@@ -96,6 +101,13 @@ const deleteRecentDir = (event: any, index: number) => {
 
         .item-src {
             padding-left: 5px;
+        }
+
+        .icon-delete-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            flex: 0 0 50px;
         }
 
         .icon-delete {

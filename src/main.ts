@@ -14,8 +14,14 @@ const vuetify = createVuetify({
     directives,
 })
 
+// Pinia
+import { createPinia } from 'pinia'
+const pinia = createPinia()
+
+// create app
 createApp(App)
     .use(vuetify)
+    .use(pinia)
     .mount('#app')
     .$nextTick(() => {
         postMessage({ payload: 'removeLoading' }, '*')
