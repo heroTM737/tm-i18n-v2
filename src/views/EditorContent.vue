@@ -40,7 +40,7 @@ const onCancel = () => {
         </div>
         <div class="panel editor-item">
             <div>
-                <b>Key</b>
+                <b>Key {{ appStore.activeKey ? `( ${appStore.activeKey} )` : null }}</b>
             </div>
             <div>
                 <input type="text" v-model="i18nKey">
