@@ -23,3 +23,15 @@ div {
     background: var(--tm-item-bg);
     border-radius: 5px;
 }
+
+*::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+    border-radius: 5px;
+    background-color: #DFE4E8;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: grey;
+    border-radius: 10px;
+}

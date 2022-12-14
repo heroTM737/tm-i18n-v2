@@ -80,13 +80,17 @@ const onCancel = () => {
     input {
         width: 100%;
         margin: 5px 0;
-        //border: 1px solid var(--tm-item-text);
+        border: 1px solid rgba(0, 0, 0, 0);
         border-radius: 5px;
         padding: 5px;
         color: var(--tm-item-text);
 
         &:focus {
             outline: none;
+        }
+
+        &:focus, &:hover {
+            border: 1px solid var(--tm-item-text);
         }
     }
 }
