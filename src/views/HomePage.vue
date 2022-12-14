@@ -25,7 +25,7 @@ const readDir = (index: number) => {
     router.push('/edit')
 }
 
-const selectDir = () => {
+const addDir = () => {
     utils.selectFileOrDirectory().then((filePath: string) => {
         let i18nPath = utils.findI18nFile(filePath)
         if (!i18nPath) {
@@ -55,7 +55,7 @@ const deleteRecentDir = (index: number) => {
 
 <template>
     <div class="page HomePage">
-        <v-btn size="small" @click="selectDir">Select</v-btn>
+        <v-btn size="small" @click="addDir">Add</v-btn>
         <div v-for="(item, index) in recentList" :key="index" class="item" @click="readDir(index)">
             <div class="flex-grow-1">
                 <input
