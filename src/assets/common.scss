@@ -12,4 +12,14 @@ div {
 
 .page {
     min-height: 100vh;
+    background: var(--tm-page-bg);
+}
+
+.page-header {
+    height: 60px;
+}
+
+.panel {
+    background: var(--tm-item-bg);
+    border-radius: 5px;
 }

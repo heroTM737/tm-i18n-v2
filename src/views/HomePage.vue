@@ -64,7 +64,7 @@ const deleteRecentDir = (index: number) => {
                     @focusout="saveRecent"
                     @click.stop=""
                 >
-                <div class="item-src">{{ item.src.split(constants.PATH_SEPARATOR).join(' > ') }}</div>
+                <div class="item-src">{{ item.src.split(constants.PATH_SEPARATOR).join(" > ") }}</div>
             </div>
             <div @click.stop="deleteRecentDir(index)" class="icon-delete-wrapper">
                 <v-icon icon="mdi-close-circle-outline" class="icon-delete"></v-icon>
@@ -75,12 +75,11 @@ const deleteRecentDir = (index: number) => {
 
 <style scoped lang="scss">
 .HomePage {
-    background: #354384;
     padding: 10px;
 
     .item {
-        background: #273772;
-        color: #fff;
+        background: var(--tm-item-bg);
+        color: var(--tm-item-text);
         padding: 10px 5px;
         margin: 10px 0;
         border-radius: 5px;
@@ -88,7 +87,7 @@ const deleteRecentDir = (index: number) => {
         display: flex;
 
         &:hover {
-            background: #183bbf;
+            background: var(--tm-item-bg-hover);
         }
 
         .item-name {
@@ -97,12 +96,12 @@ const deleteRecentDir = (index: number) => {
             background: rgba(0, 0, 0, 0);
             border: 1px solid rgba(0, 0, 0, 0);
             border-radius: 5px;
-            color: #fff;
+            color: var(--tm-item-text);
             width: 100%;
             padding-left: 5px;
 
             &:hover {
-                border-color: #fff;
+                border-color: var(--tm-item-text);
             }
         }
 

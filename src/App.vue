@@ -3,8 +3,10 @@ import ToastMessage from './components/ToastMessage.vue'
 </script>
 
 <template>
-    <router-view></router-view>
-    <ToastMessage />
+    <div class="theme-default">
+        <router-view></router-view>
+        <ToastMessage />
+    </div>
 </template>
 
 <style>

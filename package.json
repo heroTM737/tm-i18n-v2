@@ -14,6 +14,7 @@
     "node": "^14.18.0 || >=16.0.0"
   },
   "dependencies": {
+    "json-format": "^1.0.1",
     "pinia": "^2.0.28",
     "vue-router": "^4.1.6",
     "vuetify": "^3.0.4"
