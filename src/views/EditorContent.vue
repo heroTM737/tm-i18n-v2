@@ -6,6 +6,7 @@ const appStore = useAppStore()
 
 // data
 let i18nKey = ref<string>(appStore.activeKey)
+let syncAllKey = ref<boolean>(!appStore.activeKey)
 let initialData: any[] = [];
 appStore.activeData.forEach((languageData, language) => {
     initialData.push({
@@ -30,12 +31,27 @@ const onSave = () => {
 const onCancel = () => {
     appStore.closeEditorContent()
 }
+
+const onValueChange = (e: any) => {
+    if (syncAllKey.value) {
+        let value = e.target.value
+        data.forEach(item => {
+            item.value = value
+        })
+    }
+}
 </script>
 
 <template>
     <div class="EditorContent">
         <div class="panel editor-header">
             <v-btn size="small" @click="onSave">Save</v-btn>
+            <v-switch
+                v-model="syncAllKey"
+                :label="'Sync All ' + (syncAllKey ? 'On' : 'Off')"
+                hide-details
+                class="mx-3"
+            ></v-switch>
             <v-btn size="small" @click="onCancel" variant="outlined">Cancel</v-btn>
         </div>
         <div class="panel editor-item">
@@ -55,7 +71,7 @@ const onCancel = () => {
                 <b>{{ item.name }}</b>
             </div>
             <div>
-                <input type="text" v-model="item.value">
+                <input type="text" v-model="item.value" @input="onValueChange">
             </div>
         </div>
     </div>
