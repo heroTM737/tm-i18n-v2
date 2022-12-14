@@ -48,7 +48,7 @@ const onValueChange = (e: any) => {
             <v-btn size="small" @click="onSave">Save</v-btn>
             <v-switch
                 v-model="syncAllKey"
-                :label="'Sync All ' + (syncAllKey ? 'On' : 'Off')"
+                :label="'Sync all keys - ' + (syncAllKey ? 'On' : 'Off')"
                 hide-details
                 class="mx-3"
             ></v-switch>
