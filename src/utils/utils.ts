@@ -70,6 +70,14 @@ const utils = {
     },
     toast(message: string, type: string) {
         (utils.ToastMessage as any)?.open(message, type)
+    },
+    copyToClipboard(text: string) {
+        let copyText = document.createElement('input')
+        copyText.value = text
+        copyText.select()
+        copyText.setSelectionRange(0, 99999) // For mobile devices
+        navigator.clipboard.writeText(copyText.value)
+        document.removeChild(copyText)
     }
 }
 

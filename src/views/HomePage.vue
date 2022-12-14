@@ -85,6 +85,7 @@ const deleteRecentDir = (index: number) => {
         border-radius: 5px;
         cursor: pointer;
         display: flex;
+        transition: all 0.3s ease;
 
         &:hover {
             background: var(--tm-item-bg-hover);

@@ -4,6 +4,7 @@ import useAppStore from '../stores/app.store';
 import EditorContent from './EditorContent.vue';
 import constants from '../utils/constants';
 import { ref } from 'vue';
+import utils from '../utils/utils';
 
 const appStore = useAppStore()
 
@@ -22,20 +23,35 @@ const onSelectKey = (key: string) => {
 const onAddKey = () => {
     appStore.openEditorContent('')
 }
+
+const onClearSearch = () => {
+    searchKey.value = ''
+}
 </script>
 
 <template>
     <div class="page EditorPage">
         <div class="panel page-header" style="padding: 10px">
             <v-btn size="small" @click="backToHomePage" class="mr-3">Back</v-btn>
-            <b>{{ appStore.activeSource?.name }}</b> |
+            <b>{{ appStore.activeSource?.name }}</b> &nbsp;|
             {{ appStore.activeSource?.src.split(constants.PATH_SEPARATOR).join(" > ") }}
-            <v-btn size="small" @click="onAddKey" class="ml-3">Add</v-btn>
         </div>
         <div class="d-flex" style="margin-top: 10px">
             <div style="flex: 1 1 50%; width: 50%">
-                <div class="panel" style="margin-bottom: 10px">
-                    <input type="text" placeholder="Search" class="item-search" v-model="searchKey">
+                <div class="panel d-flex align-center" style="margin-bottom: 10px">
+                    <input type="text" placeholder="&hearts; Search" class="item-search" v-model="searchKey">
+                    <v-icon
+                        size="small"
+                        class="ml-3"
+                        icon="mdi-close-circle-outline"
+                        color="#fff"
+                        @click="onClearSearch"
+                    ></v-icon>
+                    <v-btn
+                        size="small"
+                        class="mx-3"
+                        @click="onAddKey"
+                    >Add</v-btn>
                 </div>
                 <div class="panel key-container">
                     <template v-for="(item, index) in appStore.activeKeyMap">
@@ -46,6 +62,12 @@ const onAddKey = () => {
                             @click="onSelectKey(item[0])"
                         >
                             {{ item[0] }}
+                            <v-icon
+                                size="small"
+                                icon="mdi-content-copy"
+                                color="#fff"
+                                @click.stop="utils.copyToClipboard(item[0])"
+                            ></v-icon>
                         </div>
                     </template>
                 </div>
@@ -72,7 +94,7 @@ const onAddKey = () => {
 }
 
 .key-container {
-    height: calc(100vh - 135px);
+    height: calc(100vh - 155px);
     overflow-y: scroll;
 }
 
@@ -82,16 +104,29 @@ const onAddKey = () => {
     padding: 5px 10px;
     color: var(--tm-item-text);
     height: 35px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
     &:hover {
         background: var(--tm-item-bg-hover);
+
+        &::v-deep .v-icon {
+            display: block;
+        }
+    }
+
+    &::v-deep .v-icon {
+        display: none;
     }
 }
 
 .item-search {
     padding: 5px 10px;
     width: 100%;
-    height: 35px;
+    height: 45px;
+    color: var(--tm-item-text);
 
     &:focus {
         outline: none;

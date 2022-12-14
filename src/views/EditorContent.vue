@@ -36,7 +36,7 @@ const onCancel = () => {
     <div class="EditorContent">
         <div class="panel editor-header">
             <v-btn size="small" @click="onSave">Save</v-btn>
-            <v-btn size="small" @click="onCancel">Cancel</v-btn>
+            <v-btn size="small" @click="onCancel" variant="outlined">Cancel</v-btn>
         </div>
         <div class="panel editor-item">
             <div>
@@ -63,7 +63,7 @@ const onCancel = () => {
 
 <style scoped lang="scss">
 .editor-header {
-    height: 35px;
+    height: 45px;
     margin-bottom: 10px;
     padding: 5px 10px;
     color: var(--tm-item-text);
@@ -80,10 +80,14 @@ const onCancel = () => {
     input {
         width: 100%;
         margin: 5px 0;
-        border: 1px solid var(--tm-item-text);
+        //border: 1px solid var(--tm-item-text);
         border-radius: 5px;
         padding: 5px;
         color: var(--tm-item-text);
+
+        &:focus {
+            outline: none;
+        }
     }
 }
 </style>
