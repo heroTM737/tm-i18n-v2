@@ -9,6 +9,8 @@ interface StateInterface {
     activeSource: RecentItemInterface | null;
     activeData: Map<string, any>;
     activeKeyMap: Map<string, any>;
+    activeKey: string;
+    visibleEditorContent: boolean;
 }
 
 const useAppStore = defineStore('counter', {
@@ -16,7 +18,9 @@ const useAppStore = defineStore('counter', {
         return {
             activeSource: null,
             activeData: new Map<string, any>(),
-            activeKeyMap: new Map<string, any>()
+            activeKeyMap: new Map<string, any>(),
+            activeKey: '',
+            visibleEditorContent: false
         }
     },
     actions: {
@@ -37,14 +41,29 @@ const useAppStore = defineStore('counter', {
             this.activeData = activeData
             this.activeKeyMap = activeKeyMap
         },
+        openEditorContent(key: string) {
+            this.activeKey = key;
+            this.visibleEditorContent = true
+        },
+        closeEditorContent() {
+            this.visibleEditorContent = false
+        },
         save() {
             let i18nFolder = this.activeSource ? this.activeSource.src : ''
             this.activeData.forEach((languageData, language) => {
+                let keyList = Object.keys(languageData).sort((a, b) => a.localeCompare(b));
+                let sortedData: any = {};
+                keyList.forEach(key => {
+                    sortedData[key] = languageData[key]
+                })
                 utils.saveFile(
                     i18nFolder + constants.PATH_SEPARATOR + language,
-                    jsonFormat(languageData, { type: 'space' })
+                    jsonFormat(sortedData, { type: 'space' })
                 )
             })
+            if (this.activeSource) {
+                this.setActiveSource(this.activeSource)
+            }
         }
     }
 })

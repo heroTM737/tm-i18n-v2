@@ -1,48 +1,59 @@
 <script setup lang="ts">
-import { defineProps, reactive } from 'vue';
+import { reactive, ref } from 'vue';
 import useAppStore from '../stores/app.store';
-
-const props = defineProps({
-    i18nKey: {
-        required: true,
-        type: String
-    }
-});
 
 const appStore = useAppStore()
 
 // data
+let i18nKey = ref<string>(appStore.activeKey)
 let initialData: any[] = [];
 appStore.activeData.forEach((languageData, language) => {
     initialData.push({
         name: language,
-        value: languageData[props.i18nKey]
+        value: languageData[i18nKey.value]
     })
 })
 const data = reactive(initialData)
 
 // methods
 const onSave = () => {
-    console.log(JSON.parse(JSON.stringify(data)))
     data.forEach(item => {
-        appStore.activeData.get(item.name)[props.i18nKey] = item.value
+        appStore.activeData.get(item.name)[i18nKey.value] = item.value
+        if (appStore.activeKey && (i18nKey.value !== appStore.activeKey)) {
+            delete appStore.activeData.get(item.name)[appStore.activeKey]
+        }
     })
     appStore.save()
+    appStore.closeEditorContent()
+}
+
+const onCancel = () => {
+    appStore.closeEditorContent()
 }
 </script>
 
 <template>
     <div class="EditorContent">
         <div class="panel editor-header">
-            <span>{{ props.i18nKey }}</span>
             <v-btn size="small" @click="onSave">Save</v-btn>
+            <v-btn size="small" @click="onCancel">Cancel</v-btn>
+        </div>
+        <div class="panel editor-item">
+            <div>
+                <b>Key</b>
+            </div>
+            <div>
+                <input type="text" v-model="i18nKey">
+            </div>
         </div>
         <div
             v-for="item in data"
             :key="item.name"
             class="panel editor-item"
         >
-            <div><b>{{ item.name }}</b></div>
+            <div>
+                <b>{{ item.name }}</b>
+            </div>
             <div>
                 <input type="text" v-model="item.value">
             </div>
