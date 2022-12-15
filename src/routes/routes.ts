@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 
 const HomePage = () => import('../views/HomePage.vue')
-const EditorPage = () => import('../views/EditorPage.vue')
+const EditorPage = () => import('../views/Editor/EditorPage.vue')
 
 const routes = [
     {

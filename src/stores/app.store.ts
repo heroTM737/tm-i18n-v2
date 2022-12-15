@@ -3,6 +3,7 @@ import fs from 'fs'
 import constants from '../utils/constants'
 import { RecentItemInterface } from '../models/models'
 import utils from '../utils/utils'
+// @ts-ignore
 import jsonFormat from 'json-format'
 
 interface StateInterface {
@@ -40,6 +41,7 @@ const useAppStore = defineStore('counter', {
             this.activeSource = item
             this.activeData = activeData
             this.activeKeyMap = activeKeyMap
+            this.visibleEditorContent = false
         },
         openEditorContent(key: string) {
             this.activeKey = key;

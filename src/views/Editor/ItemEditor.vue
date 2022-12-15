@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue';
-import useAppStore from '../stores/app.store';
+import useAppStore from '../../stores/app.store';
 
 const appStore = useAppStore()
 
@@ -25,7 +25,6 @@ const onSave = () => {
         }
     })
     appStore.save()
-    appStore.closeEditorContent()
 }
 
 const onCancel = () => {
@@ -43,8 +42,8 @@ const onValueChange = (e: any) => {
 </script>
 
 <template>
-    <div class="EditorContent">
-        <div class="panel editor-header">
+    <div class="ItemEditor">
+        <div class="panel item-editor-header">
             <v-btn size="small" @click="onSave">Save</v-btn>
             <v-switch
                 v-model="syncAllKey"
@@ -54,31 +53,33 @@ const onValueChange = (e: any) => {
             ></v-switch>
             <v-btn size="small" @click="onCancel" variant="outlined">Cancel</v-btn>
         </div>
-        <div class="panel editor-item">
-            <div>
-                <b>Key {{ appStore.activeKey ? `( ${appStore.activeKey} )` : null }}</b>
+        <div class="item-editor-language-list">
+            <div class="panel item-editor-language">
+                <div>
+                    <b>Key {{ appStore.activeKey ? `( ${appStore.activeKey} )` : null }}</b>
+                </div>
+                <div>
+                    <input type="text" v-model="i18nKey">
+                </div>
             </div>
-            <div>
-                <input type="text" v-model="i18nKey">
-            </div>
-        </div>
-        <div
-            v-for="item in data"
-            :key="item.name"
-            class="panel editor-item"
-        >
-            <div>
-                <b>{{ item.name }}</b>
-            </div>
-            <div>
-                <input type="text" v-model="item.value" @input="onValueChange">
+            <div
+                v-for="item in data"
+                :key="item.name"
+                class="panel item-editor-language"
+            >
+                <div>
+                    <b>{{ item.name }}</b>
+                </div>
+                <div>
+                    <input type="text" v-model="item.value" @input="onValueChange">
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <style scoped lang="scss">
-.editor-header {
+.item-editor-header {
     height: 45px;
     margin-bottom: 10px;
     padding: 5px 10px;
@@ -88,7 +89,12 @@ const onValueChange = (e: any) => {
     justify-content: space-between;
 }
 
-.editor-item {
+.item-editor-language-list {
+    height: calc(100vh - 145px);
+    overflow-y: scroll;
+}
+
+.item-editor-language {
     margin-bottom: 10px;
     padding: 5px 10px;
     color: var(--tm-item-text);
