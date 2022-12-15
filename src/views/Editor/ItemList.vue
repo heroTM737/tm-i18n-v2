@@ -65,6 +65,7 @@ const onClearSearch = () => {
 .item-list {
     height: calc(100vh - 145px);
     overflow-y: scroll;
+    overflow-x: auto;
 }
 
 .item {
