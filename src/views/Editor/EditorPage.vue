@@ -17,8 +17,10 @@ const backToHomePage = () => {
     <div class="page EditorPage">
         <div class="panel page-header" style="padding: 10px">
             <v-btn size="small" @click="backToHomePage" class="mr-3">Back</v-btn>
-            <b>{{ appStore.activeSource?.name }}</b> &nbsp;|
-            {{ appStore.activeSource?.src.split(constants.PATH_SEPARATOR).join(" > ") }}
+            <div>
+                <b>{{ appStore.activeSource?.name }}</b> <br>
+                {{ appStore.activeSource?.src.split(constants.PATH_SEPARATOR).join(" > ") }}
+            </div>
         </div>
         <div class="d-flex" style="margin-top: 10px">
             <div style="flex: 1 1 50%; width: 50%">
