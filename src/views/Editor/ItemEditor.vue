@@ -91,7 +91,7 @@ const onValueChange = (e: any) => {
 
 .item-editor-language-list {
     height: calc(100vh - 145px);
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .item-editor-language {
