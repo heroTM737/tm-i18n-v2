@@ -51,11 +51,18 @@ const deleteRecentDir = (index: number) => {
     recentList.splice(index, 1);
     saveRecent()
 }
+
+const goToSettings = () => {
+    router.push('/settings')
+}
 </script>
 
 <template>
     <div class="page HomePage">
-        <v-btn size="small" @click="addDir">Add</v-btn>
+        <div class="d-flex">
+            <v-btn size="small" @click="addDir" class="mr-3">Add</v-btn>
+            <v-btn size="small" @click="goToSettings">Settings</v-btn>
+        </div>
         <div v-for="(item, index) in recentList" :key="index" class="item" @click="readDir(index)">
             <div class="flex-grow-1">
                 <input
