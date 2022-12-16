@@ -9,16 +9,24 @@ const appStore = useAppStore()
 let searchKey = ref('')
 
 // methods
+const onClearSearch = () => {
+    searchKey.value = ''
+}
+
 const onSelectKey = (key: string) => {
     appStore.openEditorContent(key)
+}
+
+const onCloneKey = (key: string) => {
+    appStore.openEditorContent('', key)
 }
 
 const onAddKey = () => {
     appStore.openEditorContent('')
 }
 
-const onClearSearch = () => {
-    searchKey.value = ''
+const onDeleteKey = (key: string) => {
+    appStore.deleteKey(key);
 }
 </script>
 
@@ -49,9 +57,24 @@ const onClearSearch = () => {
                     @click="onSelectKey(item[0])"
                 >
                     {{ item[0] }}
+                    <div class="flex-grow-1"></div>
+                    <v-icon
+                        size="small"
+                        icon="mdi-close-circle-outline"
+                        color="#fff"
+                        @click.stop="onDeleteKey(item[0])"
+                        class="mr-3"
+                    ></v-icon>
                     <v-icon
                         size="small"
                         icon="mdi-content-copy"
+                        color="#fff"
+                        @click.stop="onCloneKey(item[0])"
+                        class="mr-3"
+                    ></v-icon>
+                    <v-icon
+                        size="small"
+                        icon="mdi-format-text"
                         color="#fff"
                         @click.stop="utils.copyToClipboard(item[0])"
                     ></v-icon>
@@ -77,13 +100,17 @@ const onClearSearch = () => {
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
-    justify-content: space-between;
 
     &:hover {
         background: var(--tm-item-bg-hover);
 
         &:deep(.v-icon) {
             display: block;
+            transition: all 0.3s ease;
+        }
+
+        &:deep(.v-icon:hover) {
+            color: yellow !important;
         }
     }
 

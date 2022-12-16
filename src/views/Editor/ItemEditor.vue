@@ -5,13 +5,13 @@ import useAppStore from '../../stores/app.store';
 const appStore = useAppStore()
 
 // data
-let i18nKey = ref<string>(appStore.activeKey)
+let i18nKey = ref<string>(appStore.keyClone || appStore.activeKey)
 let syncAllKey = ref<boolean>(!appStore.activeKey)
 let initialData: any[] = [];
 appStore.activeData.forEach((languageData, language) => {
     initialData.push({
         name: language,
-        value: languageData[i18nKey.value]
+        value: appStore.keyClone ? appStore.activeData.get(language)[appStore.keyClone] : languageData[i18nKey.value]
     })
 })
 const data = reactive(initialData)
@@ -56,7 +56,7 @@ const onValueChange = (e: any) => {
         <div class="item-editor-language-list">
             <div class="panel item-editor-language">
                 <div>
-                    <b>Key {{ appStore.activeKey ? `( ${appStore.activeKey} )` : null }}</b>
+                    <b>Key {{ appStore.activeKey ? `( ${appStore.activeKey} )` : ' --- adding new key ---' }}</b>
                 </div>
                 <div>
                     <input type="text" v-model="i18nKey">

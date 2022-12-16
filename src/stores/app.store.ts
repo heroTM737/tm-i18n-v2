@@ -12,6 +12,8 @@ interface StateInterface {
     activeKeyMap: Map<string, any>;
     activeKey: string;
     visibleEditorContent: boolean;
+    keyClone: string;
+    count: number;
 }
 
 const useAppStore = defineStore('counter', {
@@ -21,7 +23,9 @@ const useAppStore = defineStore('counter', {
             activeData: new Map<string, any>(),
             activeKeyMap: new Map<string, any>(),
             activeKey: '',
-            visibleEditorContent: false
+            visibleEditorContent: false,
+            keyClone: '',
+            count: 0
         }
     },
     actions: {
@@ -43,9 +47,11 @@ const useAppStore = defineStore('counter', {
             this.activeKeyMap = activeKeyMap
             this.visibleEditorContent = false
         },
-        openEditorContent(key: string) {
+        openEditorContent(key: string, keyClone: string = '') {
             this.activeKey = key;
             this.visibleEditorContent = true
+            this.keyClone = keyClone
+            this.count = (this.count + 1) % 3
         },
         closeEditorContent() {
             this.visibleEditorContent = false
@@ -66,6 +72,12 @@ const useAppStore = defineStore('counter', {
             if (this.activeSource) {
                 this.setActiveSource(this.activeSource)
             }
+        },
+        deleteKey (key: string) {
+            this.activeData.forEach((languageData, language) => {
+                delete languageData[key];
+            })
+            this.save()
         }
     }
 })

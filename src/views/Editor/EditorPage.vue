@@ -29,7 +29,7 @@ const backToHomePage = () => {
             <div style="margin-left: 10px; flex: 1 1 50%; width: 50%">
                 <ItemEditor
                     v-if="appStore.visibleEditorContent"
-                    :key="appStore.activeKey || 'add'"
+                    :key="appStore.count"
                 />
             </div>
         </div>
