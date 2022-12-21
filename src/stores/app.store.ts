@@ -6,7 +6,7 @@ import utils from '../utils/utils'
 // @ts-ignore
 import jsonFormat from 'json-format'
 
-interface StateInterface {
+interface AppStateInterface {
     activeSource: RecentItemInterface | null;
     activeData: Map<string, any>;
     activeKeyMap: Map<string, any>;
@@ -16,8 +16,8 @@ interface StateInterface {
     count: number;
 }
 
-const useAppStore = defineStore('counter', {
-    state: (): StateInterface => {
+const useAppStore = defineStore('app-store', {
+    state: (): AppStateInterface => {
         return {
             activeSource: null,
             activeData: new Map<string, any>(),

@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import ToastMessage from './components/ToastMessage.vue'
-import Background from './components/Background.vue';</script>
+import Background from './components/Background/Background.vue';</script>
 
 <template>
-    <div class="theme-default">
+    <v-app class="theme-default">
         <div class="layer bg-layer">
             <Background />
         </div>
@@ -11,7 +11,7 @@ import Background from './components/Background.vue';</script>
             <router-view></router-view>
         </div>
         <ToastMessage />
-    </div>
+    </v-app>
 </template>
 
 <style>
