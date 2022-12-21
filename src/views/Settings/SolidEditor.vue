@@ -2,13 +2,14 @@
 import useBackgroundStore from '../../stores/background.store';
 
 const backgroundStore = useBackgroundStore();
+const solidData = backgroundStore.solidData;
 </script>
 
 <template>
     <div>
-        <b>Color</b>: {{ backgroundStore.solidData.color }}
-        <div :style="{background: backgroundStore.solidData.color}" class="color-sample"></div>
-        <v-color-picker v-model="backgroundStore.solidData.color" />
+        <b>Color</b>: {{ solidData.color }}
+        <div :style="{background: solidData.color}" class="color-sample"></div>
+        <v-color-picker v-model="solidData.color" />
     </div>
 </template>
 

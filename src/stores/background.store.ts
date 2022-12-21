@@ -9,8 +9,14 @@ export enum BackgroundType {
 
 interface BackgroundStateInterface {
     type: BackgroundType;
-    solidData: any;
-    gradientData: any;
+    solidData: {
+        color: string;
+    };
+    gradientData: {
+        angle: number;
+        color1: string;
+        color2: string;
+    };
     imageData: any;
     dynamicData: any;
 }
@@ -22,7 +28,11 @@ const useBackgroundStore = defineStore('background-store', {
             solidData: {
                 color: '#354384'
             },
-            gradientData: {},
+            gradientData: {
+                angle: 90,
+                color1: '#673ab7',
+                color2: '#bfc3d9'
+            },
             imageData: {},
             dynamicData: {}
         }
