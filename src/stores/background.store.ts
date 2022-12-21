@@ -27,7 +27,7 @@ interface BackgroundStateInterface {
 const useBackgroundStore = defineStore('background-store', {
     state: (): BackgroundStateInterface => {
         return {
-            type: BackgroundType.IMAGE,
+            type: BackgroundType.DYNAMIC,
             solidData: {
                 color: '#354384'
             },

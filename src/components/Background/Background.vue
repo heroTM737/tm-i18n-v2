@@ -3,6 +3,7 @@ import useBackgroundStore, { BackgroundType } from '../../stores/background.stor
 import SolidBackground from './SolidBackground.vue';
 import GradientBackground from './GradientBackground.vue';
 import ImageBackground from './ImageBackground.vue';
+import DynamicBackground from './DynamicBackground.vue';
 
 const backgroundStore = useBackgroundStore();
 </script>
@@ -12,6 +13,7 @@ const backgroundStore = useBackgroundStore();
         <SolidBackground class="background-renderer" v-if="backgroundStore.type === BackgroundType.SOLID" />
         <GradientBackground class="background-renderer" v-if="backgroundStore.type === BackgroundType.GRADIENT" />
         <ImageBackground class="background-renderer" v-if="backgroundStore.type === BackgroundType.IMAGE" />
+        <DynamicBackground class="background-renderer" v-if="backgroundStore.type === BackgroundType.DYNAMIC" />
     </div>
 </template>
 
