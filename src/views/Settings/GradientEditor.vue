@@ -8,11 +8,26 @@ const gradientData = backgroundStore.gradientData;
 <template>
     <div>
         <div>
-            Angle
-            <v-text-field
-                type="number"
+            <v-slider
                 v-model="gradientData.angle"
-            />
+                color="blue"
+                label="Angle"
+                min="0"
+                max="360"
+                step="1"
+            >
+                <template v-slot:append>
+                    <v-text-field
+                        v-model="gradientData.angle"
+                        hide-details
+                        single-line
+                        density="compact"
+                        type="number"
+                        style="width: 100px"
+                        readonly
+                    ></v-text-field>
+                </template>
+            </v-slider>
         </div>
         <div class="d-flex">
             <div class="flex-grow-1">
