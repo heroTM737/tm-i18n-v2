@@ -17,14 +17,17 @@ interface BackgroundStateInterface {
         color1: string;
         color2: string;
     };
-    imageData: any;
+    imageData: {
+        file: File,
+        fileUrl: string;
+    };
     dynamicData: any;
 }
 
 const useBackgroundStore = defineStore('background-store', {
     state: (): BackgroundStateInterface => {
         return {
-            type: BackgroundType.SOLID,
+            type: BackgroundType.IMAGE,
             solidData: {
                 color: '#354384'
             },
@@ -33,7 +36,10 @@ const useBackgroundStore = defineStore('background-store', {
                 color1: '#673ab7',
                 color2: '#bfc3d9'
             },
-            imageData: {},
+            imageData: {
+                file: new File([], ''),
+                fileUrl: ''
+            },
             dynamicData: {}
         }
     },
