@@ -7,7 +7,8 @@ const constants = {
     },
     DYNAMIC_ID: {
         SAKURA: 'SAKURA',
-        WAVE: 'WAVE'
+        WAVE: 'WAVE',
+        GRADIENT: 'GRADIENT'
     }
 }
 
