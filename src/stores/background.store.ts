@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import constants from '../utils/constants';
 
 export enum BackgroundType {
     SOLID,
@@ -21,7 +22,9 @@ interface BackgroundStateInterface {
         file: File,
         fileUrl: string;
     };
-    dynamicData: any;
+    dynamicData: {
+        id: string;
+    };
 }
 
 const useBackgroundStore = defineStore('background-store', {
@@ -40,7 +43,9 @@ const useBackgroundStore = defineStore('background-store', {
                 file: new File([], ''),
                 fileUrl: ''
             },
-            dynamicData: {}
+            dynamicData: {
+                id: constants.DYNAMIC_ID.SAKURA
+            }
         }
     },
     actions: {

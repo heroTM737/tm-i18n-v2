@@ -4,6 +4,10 @@ const constants = {
         ERROR: 'red',
         SUCCESS: 'orange',
         INFO: 'blue'
+    },
+    DYNAMIC_ID: {
+        SAKURA: 'SAKURA',
+        WAVE: 'WAVE'
     }
 }
 
