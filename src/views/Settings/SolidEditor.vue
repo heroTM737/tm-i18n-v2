@@ -7,8 +7,10 @@ const solidData = backgroundStore.solidData;
 
 <template>
     <div>
-        <b>Color</b>: {{ solidData.color }}
-        <div :style="{background: solidData.color}" class="color-sample"></div>
+        <div class="d-flex align-center mb-3">
+            <div style="width: 150px"><b>Color</b>: {{ solidData.color }}</div>
+            <div :style="{background: solidData.color}" class="color-sample"></div>
+        </div>
         <v-color-picker v-model="solidData.color" />
     </div>
 </template>
@@ -18,6 +20,5 @@ const solidData = backgroundStore.solidData;
     width: 30px;
     height: 30px;
     border-radius: 5px;
-    margin-bottom: 10px;
 }
 </style>

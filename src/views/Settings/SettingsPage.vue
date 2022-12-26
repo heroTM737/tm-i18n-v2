@@ -24,7 +24,7 @@ const goToHome = () => {
             <b style="margin-left: 10px">Settings</b>
         </div>
         <tm-expansion-panel title="Background" class="mb-3">
-            <div class="d-flex">
+            <div class="d-flex pa-3">
                 <v-radio-group style="flex: 0 0 20%" v-model="backgroundStore.type">
                     <v-radio label="Solid" :value="BackgroundType.SOLID"></v-radio>
                     <v-radio label="Gradient" :value="BackgroundType.GRADIENT"></v-radio>
