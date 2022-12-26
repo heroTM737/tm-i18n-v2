@@ -21,7 +21,6 @@ interface BackgroundStateInterface {
         color2: string;
     };
     imageData: {
-        file: File,
         fileUrl: string;
         filePath: string;
     };
@@ -43,7 +42,6 @@ const useBackgroundStore = defineStore('background-store', {
                 color2: '#bfc3d9'
             },
             imageData: {
-                file: new File([], ''),
                 fileUrl: '',
                 filePath: ''
             },
@@ -64,11 +62,9 @@ const useBackgroundStore = defineStore('background-store', {
                 this.dynamicData = background.dynamicData
                 let filePath = `user\\images\\${background.imageData.filePath}`
                 if (fs.existsSync(filePath)) {
-                    const base64 = fs.readFileSync(filePath).toString('base64');
                     this.imageData = {
-                        ...this.imageData,
-                        fileUrl: `data:image/jpg;base64,${base64}`,
-                        filePath: background.imageData.filePath
+                        filePath: background.imageData.filePath,
+                        fileUrl: utils.readImage(filePath)
                     }
                 }
             }

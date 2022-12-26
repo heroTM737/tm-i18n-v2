@@ -44,6 +44,10 @@ const utils = {
             fs.writeFileSync(filePath, new DataView(buffer))
         })
     },
+    readImage(filePath: string) {
+        const base64 = fs.readFileSync(filePath).toString('base64')
+        return `data:image/jpg;base64,${base64}`
+    },
     findI18nFile(path: string): string | null {
         let isDirectory = fs.lstatSync(path).isDirectory()
         if (isDirectory) {
