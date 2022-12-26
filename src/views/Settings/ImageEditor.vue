@@ -1,12 +1,19 @@
 <script setup lang="ts">
-import useBackgroundStore from '../../stores/background.store';
+import useBackgroundStore from '../../stores/background.store'
+import { v4 as uuid } from 'uuid'
+import utils from '../../utils/utils';
 
 const backgroundStore = useBackgroundStore();
 const imageData = backgroundStore.imageData;
 
 const onFileSelected = (e: any) => {
-    imageData.file = e.target.files[0];
-    imageData.fileUrl = URL.createObjectURL(imageData.file);
+    let file = e.target.files[0]
+    imageData.file = file
+    imageData.fileUrl = URL.createObjectURL(imageData.file)
+    let split = file.name.split('.')
+    let fileExtension = split[split.length-1]
+    imageData.filePath = `${uuid()}.${fileExtension}`
+    utils.writeFileBuffer(`user\\images\\${imageData.filePath}`, file)
 }
 </script>
 

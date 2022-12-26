@@ -2,8 +2,15 @@
 import ToastMessage from './components/ToastMessage.vue'
 import Background from './components/Background/Background.vue';
 import useAppStore from './stores/app.store';
+import useBackgroundStore from './stores/background.store';
+import { onMounted } from 'vue';
 
 const appStore = useAppStore()
+const backgroundStore = useBackgroundStore()
+onMounted(() => {
+    backgroundStore.readUserSetting()
+})
+
 </script>
 <template>
     <v-app class="theme-default">

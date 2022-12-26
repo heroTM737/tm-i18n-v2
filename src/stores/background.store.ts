@@ -1,11 +1,13 @@
 import { defineStore } from 'pinia'
 import constants from '../utils/constants';
+import utils from '../utils/utils';
+import fs from 'fs';
 
 export enum BackgroundType {
-    SOLID,
-    GRADIENT,
-    IMAGE,
-    DYNAMIC
+    SOLID = 'SOLID',
+    GRADIENT = 'GRADIENT',
+    IMAGE = 'IMAGE',
+    DYNAMIC = 'DYNAMIC'
 }
 
 interface BackgroundStateInterface {
@@ -21,6 +23,7 @@ interface BackgroundStateInterface {
     imageData: {
         file: File,
         fileUrl: string;
+        filePath: string;
     };
     dynamicData: {
         id: string;
@@ -41,7 +44,8 @@ const useBackgroundStore = defineStore('background-store', {
             },
             imageData: {
                 file: new File([], ''),
-                fileUrl: ''
+                fileUrl: '',
+                filePath: ''
             },
             dynamicData: {
                 id: constants.DYNAMIC_ID.WAVE
@@ -49,18 +53,26 @@ const useBackgroundStore = defineStore('background-store', {
         }
     },
     actions: {
-        setSolidData(data: any) {
-            this.solidData = data
-        },
-        setGradientData(data: any) {
-            this.gradientData = data
-        },
-        setImageData(data: any) {
-            this.imageData = data
-        },
-        setDynamicData(data: any) {
-            this.dynamicData = data
-        },
+        readUserSetting() {
+            let text = utils.readFile(constants.settingPath)
+            if (text) {
+                let setting = JSON.parse(text)
+                let background = setting.background
+                this.type = background.type
+                this.solidData = background.solidData
+                this.gradientData = background.gradientData
+                this.dynamicData = background.dynamicData
+                let filePath = `user\\images\\${background.imageData.filePath}`
+                if (fs.existsSync(filePath)) {
+                    const base64 = fs.readFileSync(filePath).toString('base64');
+                    this.imageData = {
+                        ...this.imageData,
+                        fileUrl: `data:image/jpg;base64,${base64}`,
+                        filePath: background.imageData.filePath
+                    }
+                }
+            }
+        }
     }
 })
 

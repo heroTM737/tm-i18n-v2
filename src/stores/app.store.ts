@@ -82,7 +82,7 @@ const useAppStore = defineStore('app-store', {
                 keyList.forEach(key => {
                     sortedData[key] = languageData[key]
                 })
-                utils.saveFile(
+                utils.writeFile(
                     i18nFolder + constants.PATH_SEPARATOR + language,
                     jsonFormat(sortedData, { type: 'space' })
                 )

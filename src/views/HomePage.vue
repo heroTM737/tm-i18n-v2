@@ -11,13 +11,12 @@ defineProps<{}>()
 const appStore = useAppStore()
 
 // data
-let fileName = 'recent.json'
-let fileContent = utils.readFile(fileName);
+let fileContent = utils.readFile(constants.recentPath);
 let recentList = reactive<RecentItemInterface[]>(fileContent ? JSON.parse(fileContent) : [])
 
 // methods
 const saveRecent = () => {
-    utils.saveFile(fileName, JSON.stringify(recentList))
+    utils.writeFile(constants.recentPath, JSON.stringify(recentList))
 }
 
 const readDir = (index: number) => {

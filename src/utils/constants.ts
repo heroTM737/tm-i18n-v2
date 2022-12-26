@@ -9,7 +9,9 @@ const constants = {
         SAKURA: 'SAKURA',
         WAVE: 'WAVE',
         GRADIENT: 'GRADIENT'
-    }
+    },
+    settingPath: 'user\\setting.json',
+    recentPath: 'user\\recent.json'
 }
 
 export default constants

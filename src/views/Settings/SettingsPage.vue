@@ -1,16 +1,30 @@
 <script setup lang="ts">
 import router from '../../routes/routes';
 import useBackgroundStore, { BackgroundType } from '../../stores/background.store';
-import { ref } from 'vue';
 import SolidEditor from './SolidEditor.vue';
 import GradientEditor from './GradientEditor.vue';
 import ImageEditor from './ImageEditor.vue';
 import DynamicEditor from './DynamicEditor.vue';
 import TmExpansionPanel from '../../components/tm-expansion-panel.vue';
+import utils from '../../utils/utils';
+import constants from '../../utils/constants';
 
 const backgroundStore = useBackgroundStore();
 
-const panels = ref(['background']);
+const onSave = () => {
+    let setting = {
+        background: {
+            type: backgroundStore.type,
+            solidData: backgroundStore.solidData,
+            gradientData: backgroundStore.gradientData,
+            imageData: {
+                filePath: backgroundStore.imageData.filePath
+            },
+            dynamicData: backgroundStore.dynamicData
+        }
+    }
+    utils.writeFile(constants.settingPath, JSON.stringify(setting))
+}
 
 const goToHome = () => {
     router.push('/')
@@ -22,6 +36,8 @@ const goToHome = () => {
         <div class="panel header">
             <v-btn size="small" @click="goToHome">Back</v-btn>
             <b style="margin-left: 10px">Settings</b>
+            <v-spacer />
+            <v-btn size="small" @click="onSave">Save</v-btn>
         </div>
         <tm-expansion-panel title="Background" class="mb-3">
             <div class="d-flex pa-3">
@@ -32,10 +48,10 @@ const goToHome = () => {
                     <v-radio label="Dynamic" :value="BackgroundType.DYNAMIC"></v-radio>
                 </v-radio-group>
                 <div style="flex: 1 1 1px">
-                    <SolidEditor v-if="backgroundStore.type === BackgroundType.SOLID"/>
-                    <GradientEditor v-if="backgroundStore.type === BackgroundType.GRADIENT"/>
-                    <ImageEditor v-if="backgroundStore.type === BackgroundType.IMAGE"/>
-                    <DynamicEditor v-if="backgroundStore.type === BackgroundType.DYNAMIC"/>
+                    <SolidEditor v-if="backgroundStore.type === BackgroundType.SOLID" />
+                    <GradientEditor v-if="backgroundStore.type === BackgroundType.GRADIENT" />
+                    <ImageEditor v-if="backgroundStore.type === BackgroundType.IMAGE" />
+                    <DynamicEditor v-if="backgroundStore.type === BackgroundType.DYNAMIC" />
                 </div>
             </div>
         </tm-expansion-panel>

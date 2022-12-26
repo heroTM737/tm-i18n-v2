@@ -36,8 +36,13 @@ const utils = {
         }
         return null
     },
-    saveFile(filePath: string, fileContent: string) {
-        return fs.writeFileSync(filePath, fileContent)
+    writeFile(filePath: string, fileContent: string) {
+        fs.writeFileSync(filePath, fileContent)
+    },
+    writeFileBuffer(filePath: string, file: File) {
+        file.arrayBuffer().then(buffer => {
+            fs.writeFileSync(filePath, new DataView(buffer))
+        })
     },
     findI18nFile(path: string): string | null {
         let isDirectory = fs.lstatSync(path).isDirectory()
