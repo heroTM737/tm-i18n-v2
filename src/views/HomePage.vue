@@ -21,8 +21,9 @@ const saveRecent = () => {
 }
 
 const readDir = (index: number) => {
-    appStore.setActiveSource(recentList[index])
-    router.push('/edit')
+    appStore.setActiveSource(recentList[index]).then(() => {
+        router.push('/edit')
+    })
 }
 
 const addDir = () => {

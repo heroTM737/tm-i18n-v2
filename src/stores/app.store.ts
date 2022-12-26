@@ -7,6 +7,7 @@ import utils from '../utils/utils'
 import jsonFormat from 'json-format'
 
 interface AppStateInterface {
+    loading: boolean;
     activeSource: RecentItemInterface | null;
     activeData: Map<string, any>;
     activeKeyMap: Map<string, any>;
@@ -19,6 +20,7 @@ interface AppStateInterface {
 const useAppStore = defineStore('app-store', {
     state: (): AppStateInterface => {
         return {
+            loading: false,
             activeSource: null,
             activeData: new Map<string, any>(),
             activeKeyMap: new Map<string, any>(),
@@ -30,22 +32,38 @@ const useAppStore = defineStore('app-store', {
     },
     actions: {
         setActiveSource(item: RecentItemInterface) {
-            let activeData = new Map<string, any>()
-            let activeKeyMap = new Map<string, any>()
-            fs.readdirSync(item.src)
-                .filter(fileName => fileName.endsWith('json'))
-                .map(fileName => {
-                    let fileContentString = fs.readFileSync(item.src + constants.PATH_SEPARATOR + fileName, 'utf8')
-                    let fileContent = JSON.parse(fileContentString)
-                    for (let key in fileContent) {
-                        activeKeyMap.set(key, key)
-                    }
-                    activeData.set(fileName, fileContent)
+            this.loading = true
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    fs.readdir(item.src, null, (errors, fileList) => {
+                        let activeData = new Map<string, any>()
+                        let activeKeyMap = new Map<string, any>()
+                        if (errors) {
+                            this.loading = false;
+                            reject(errors);
+                            return;
+                        }
+                        fileList
+                            .filter(fileName => fileName.endsWith('json'))
+                            .map(fileName => {
+                                let fileContentString = fs.readFileSync(item.src + constants.PATH_SEPARATOR + fileName, 'utf8')
+                                let fileContent = JSON.parse(fileContentString)
+                                for (let key in fileContent) {
+                                    activeKeyMap.set(key, key)
+                                }
+                                activeData.set(fileName, fileContent)
+                            })
+                        this.activeSource = item
+                        this.activeData = activeData
+                        this.activeKeyMap = activeKeyMap
+                        this.visibleEditorContent = false
+                        resolve(fileList)
+                        setTimeout(() => {
+                            this.loading = false
+                        }, 500)
+                    })
                 })
-            this.activeSource = item
-            this.activeData = activeData
-            this.activeKeyMap = activeKeyMap
-            this.visibleEditorContent = false
+            })
         },
         openEditorContent(key: string, keyClone: string = '') {
             this.activeKey = key;
@@ -73,7 +91,7 @@ const useAppStore = defineStore('app-store', {
                 this.setActiveSource(this.activeSource)
             }
         },
-        deleteKey (key: string) {
+        deleteKey(key: string) {
             this.activeData.forEach((languageData, language) => {
                 delete languageData[key];
             })
