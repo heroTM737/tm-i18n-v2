@@ -44,7 +44,7 @@ const useBackgroundStore = defineStore('background-store', {
                 fileUrl: ''
             },
             dynamicData: {
-                id: constants.DYNAMIC_ID.SAKURA
+                id: constants.DYNAMIC_ID.WAVE
             }
         }
     },
