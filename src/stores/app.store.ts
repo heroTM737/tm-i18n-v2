@@ -84,7 +84,7 @@ const useAppStore = defineStore('app-store', {
                 })
                 utils.writeFile(
                     i18nFolder + constants.PATH_SEPARATOR + language,
-                    jsonFormat(sortedData, { type: 'space' })
+                    jsonFormat(sortedData, { type: 'space' }) + '\n'
                 )
             })
             if (this.activeSource) {
