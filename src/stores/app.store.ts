@@ -3,8 +3,10 @@ import fs from 'fs'
 import constants from '../utils/constants'
 import { RecentItemInterface } from '../models/models'
 import utils from '../utils/utils'
+import flatten from 'flat'
 // @ts-ignore
 import jsonFormat from 'json-format'
+
 
 interface AppStateInterface {
     loading: boolean;
@@ -15,6 +17,15 @@ interface AppStateInterface {
     visibleEditorContent: boolean;
     keyClone: string;
     count: number;
+}
+
+function sortKey (data: any) {
+    let keyList = Object.keys(data).sort((a, b) => a.localeCompare(b));
+    let sortedData: any = {};
+    keyList.forEach(key => {
+        sortedData[key] = data[key]
+    })
+    return sortedData
 }
 
 const useAppStore = defineStore('app-store', {
@@ -39,7 +50,7 @@ const useAppStore = defineStore('app-store', {
                         let activeData = new Map<string, any>()
                         let activeKeyMap = new Map<string, any>()
                         if (errors) {
-                            this.loading = false;
+                            this.loading = false
                             reject(errors);
                             return;
                         }
@@ -48,10 +59,11 @@ const useAppStore = defineStore('app-store', {
                             .map(fileName => {
                                 let fileContentString = fs.readFileSync(item.src + constants.PATH_SEPARATOR + fileName, 'utf8')
                                 let fileContent = JSON.parse(fileContentString)
-                                for (let key in fileContent) {
+                                let fileContentFlat = sortKey(flatten(fileContent))
+                                for (let key in fileContentFlat) {
                                     activeKeyMap.set(key, key)
                                 }
-                                activeData.set(fileName, fileContent)
+                                activeData.set(fileName, fileContentFlat)
                             })
                         this.activeSource = item
                         this.activeData = activeData
@@ -77,14 +89,11 @@ const useAppStore = defineStore('app-store', {
         save() {
             let i18nFolder = this.activeSource ? this.activeSource.src : ''
             this.activeData.forEach((languageData, language) => {
-                let keyList = Object.keys(languageData).sort((a, b) => a.localeCompare(b));
-                let sortedData: any = {};
-                keyList.forEach(key => {
-                    sortedData[key] = languageData[key]
-                })
+                let sortedData: any = sortKey(languageData)
+                let dataInObject = flatten.unflatten(sortedData)
                 utils.writeFile(
                     i18nFolder + constants.PATH_SEPARATOR + language,
-                    jsonFormat(sortedData, { type: 'space' }) + '\n'
+                    jsonFormat(dataInObject, { type: 'space' }) + '\n'
                 )
             })
             if (this.activeSource) {
@@ -92,7 +101,7 @@ const useAppStore = defineStore('app-store', {
             }
         },
         deleteKey(key: string) {
-            this.activeData.forEach((languageData, language) => {
+            this.activeData.forEach((languageData) => {
                 delete languageData[key];
             })
             this.save()

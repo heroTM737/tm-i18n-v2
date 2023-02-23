@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import constants from '../../utils/constants';
-import useBackgroundStore from '../../stores/background.store';
+import { storeToRefs } from "pinia"
+import constants from "../../utils/constants";
+import useBackgroundStore from "../../stores/background.store";
 
 const backgroundStore = useBackgroundStore();
-const dynamicData = backgroundStore.dynamicData;
+const { dynamicData } = storeToRefs(backgroundStore);
 
 const itemList = Object.values(constants.DYNAMIC_ID);
 </script>

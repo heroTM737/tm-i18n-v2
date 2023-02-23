@@ -14,13 +14,15 @@
     "node": "^14.18.0 || >=16.0.0"
   },
   "dependencies": {
+    "flat": "^5.0.2",
     "json-format": "^1.0.1",
-    "pinia": "^2.0.28",
+    "pinia": "^2.0.32",
     "uuid": "^9.0.0",
     "vue-router": "^4.1.6",
     "vuetify": "^3.0.4"
   },
   "devDependencies": {
+    "@types/flat": "^5.0.2",
     "@types/uuid": "^9.0.0",
     "@vitejs/plugin-vue": "^4.0.0",
     "electron": "^22.0.0",

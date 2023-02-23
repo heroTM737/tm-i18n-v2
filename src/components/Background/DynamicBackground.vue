@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from 'vue';
 import useBackgroundStore from '../../stores/background.store';
 import constants from '../../utils/constants';
 import DynamicSakura from './dynamic/sakura/DynamicSakura.vue';
@@ -6,7 +7,7 @@ import DynamicWave from './dynamic/wave/DynamicWave.vue';
 import DynamicGradient from './dynamic/gradient/DynamicGradient.vue';
 
 const backgroundStore = useBackgroundStore();
-const dynamicData = backgroundStore.dynamicData;
+const dynamicData = computed(() => backgroundStore.dynamicData);
 </script>
 
 <template>
